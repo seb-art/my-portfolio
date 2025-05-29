@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sebastian K. John - Software Engineer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+        }
+
+        :root {
+            --bg-color: #0d0d0d;
+            --text-color: #e0e0e0;
+            --accent-color: #00aaff;
+            --accent-secondary: #00cc99;
+            --card-bg: #1a1a1a;
+            --card-shadow: rgba(0, 170, 255, 0.2);
+        }
+
+        body.light-mode {
+            --bg-color: #f5f5f5;
+            --text-color: #333;
+            --accent-color: #0077cc;
+            --accent-secondary: #009966;
+            --card-bg: #ffffff;
+            --card-shadow: rgba(0, 119, 204, 0.2);
+        }
+
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--accent-color);
+            border: none;
+            padding: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+
+        .theme-toggle svg {
+            width: 24pxspecify: inherit;
+        }
+
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.pexels.com/photos/546819/pexels-photo-546819.jpeg');
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            padding: 20px;
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            background: linear-gradient(45deg, var(--accent-color), var(--accent-secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: 1.6rem;
+            margin: 20px 0;
+            font-weight: 300;
+        }
+
+        .hero .btn {
+            background: var(--accent-color);
+            color: white;
+            padding: 12px 30px;
+            text-decoration: none;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            box-shadow: 0 0 10px var(--card-shadow);
+        }
+
+        .hero .btn:hover {
+            transform: scale(1.15);
+            box-shadow: 0 0 20px var(--card-shadow);
+        }
+
+        section {
+            padding: 100px 20px;
+            position: relative;
+        }
+
+        h2 {
+            font-size: 3.2rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            text-align: center;
+            margin-bottom: 50px;
+            text-transform: uppercase;
+        }
+
+        .about {
+            background: url('https://images.pexels.com/photos/1591061/pexels-photo-1591061.jpeg') center/cover;
+            background-attachment: fixed;
+            padding: 120px 20px;
+        }
+
+        .about .card {
+            background: var(--card-bg);
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 40px;
+            border-radius: 20px;
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--card-shadow);
+            box-shadow: 0 4px 15px var(--card-shadow);
+        }
+
+        .experience {
+            background: var(--bg-color);
+        }
+
+        .exp-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .exp-card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 15px;
+            transform: perspective(1000px);
+            box-shadow: 0 4px 10px var(--card-shadow);
+        }
+
+        .exp-card:hover {
+            transform: perspective(1000px) rotateY(15deg) translateY(-10px);
+            box-shadow: 0 8px 20px var(--card-shadow);
+        }
+
+        .exp-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+        }
+
+        .skills {
+            background: url('https://images.pexels.com/photos/1089438/pexels-photo-1089438.jpeg') center/cover;
+            background-attachment: fixed;
+        }
+
+        .skills-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .skill-item {
+            background: linear-gradient(45deg, var(--accent-color), var(--accent-secondary));
+            color: white;
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+        }
+
+        .skill-item:hover {
+            transform: rotate(10deg) scale(1.2);
+            box-shadow: 0 0 15px var(--card-shadow);
+        }
+
+        .education, .certifications {
+            background: var(--bg-color);
+        }
+
+        .edu-card, .cert-card {
+            background: var(--card-bg);
+            padding: 25px;
+            margin: 20px auto;
+            max-width: 700px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px var(--card-shadow);
+        }
+
+        .contact {
+            background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('https://images.pexels.com/photos/355952/pexels-photo-355952.jpeg');
+            background-size: cover;
+            text-align: center;
+            padding: 120px 20px;
+        }
+
+        .contact-links a, .download-btn {
+            color: var(--accent-color);
+            text-decoration: none;
+            font-size: 1.3rem;
+            margin: 15px;
+            display: inline-block;
+        }
+
+        .download-btn {
+            background: rgba(244, 0, 0, 0.384);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        .contact-links a:hover, .download-btn:hover {
+            color: rgb(9, 255, 0);
+            transform: translateY(-5px);
+        }
+
+        footer {
+            background: var(--card-bg);
+            text-align: center;
+            padding: 25px;
+            font-size: 0.9rem;
+            border-top: 1px solid var(--card-shadow);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+
+            .hero p {
+                font-size: 1.3rem;
+            }
+
+            h2 {
+                font-size: 2.2rem;
+            }
+
+            .exp-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about .card, .edu-card, .cert-card {
+                padding: 20px;
+            }
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()">
+        <svg class="sun-icon" viewBox="0 0 24 24" fill="white" style="display: none;">
+            <path d="M12 2a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0V3a1 1 0 0 1 1-1zm0 15a1 1 0 0 1 1 1v1a1 1 0 0 1-2 0v-1a1 1 0 0 1 1-1zm8.66-10a1 1 0 0 1-.366 1.366l-.707.707a1 1 0 0 1-1.414-1.414l.707-.707A1 1 0 0 1 20.66 7zm-15.314 0l.707.707a1 1 0 0 1-1.414 1.414l-.707-.707A1 1 0 0 1 5.34 7zM17 12a5 5 0 1 1-10 0 5 5 0 0 1 10 0zm-7.071-4.243a1 1 0 0 1 0 1.414l-.707.707a1 1 0 0 1-1.414-1.414l.707-.707a1 1 0 0 1 1.414 0zm7.072 0l.707.707a1 1 0 0 1-1.414 1.414l-.707-.707a1 1 0 0 1 1.414-1.414zM12 9a3 3 0 1 0 0 6 3 3 0 0 0 0-6zm-9 3a1 1 0 0 1-1-1H1a1 1 0 0 1 2 0zm17 0a1 1 0 0 1 1-1h1a1 1 0 0 1-2 0z"/>
+        </svg>
+        <svg class="moon-icon" viewBox="0 0 24 24" fill="white">
+            <path d="M21.64,13a1,1,0,0,0-1.05-.14,8.05,8.05,0,0,1-3.37.73A8.15,8.15,0,0,1,9.08,5.49a8.59,8.59,0,0,1,.6-2A1,1,0,0,0,8.81,2.14,10.25,10.25,0,0,0,2.75,10.54,10.24,10.24,0,0,0,19.46,21.25a9.94,9.94,0,0,0,2.33-.29,1,1,0,0,0,.45-1.85Z"/>
+        </svg>
+    </button>
+
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Sebastian K. John</h1>
+            <p>Building Scalable Systems with Code, Cloud, and DevOps</p>
+            <a href="#contact" class="btn">Connect with Me</a>
+        </div>
+    </section>
+
+    <section class="about" id="summary">
+        <h2>About Me</h2>
+        <div class="card">
+            <p>I'm a passionate Software Engineer specializing in distributed systems, cloud infrastructure, and DevOps. I excel at crafting scalable APIs, automating infrastructure with tools like Terraform and Kubernetes, and ensuring system reliability through advanced monitoring. My goal is to deliver efficient, secure, and innovative solutions.</p>
+        </div>
+    </section>
+
+    <section class="experience" id="experience">
+        <h2>Experience</h2>
+        <div class="exp-grid">
+            <div class="exp-card">
+                <h3>Backend Engineer</h3>
+                <p>Nathan Digital, Nairobi (Hybrid) | May 2024 - Present</p>
+                <p>Developed robust APIs with Express.js and Spring Boot, deployed scalable AWS infrastructure with Docker, and enhanced observability with Prometheus and Grafana.</p>
+            </div>
+            <div class="exp-card">
+                <h3>Software Engineer & Instructor</h3>
+                <p>Qubit Institute, Hybrid | Jun 2022 - Mar 2024</p>
+                <p>Built full-stack apps with React.js and PostgreSQL, implemented CI/CD pipelines, and mentored students in Python, Java, and cloud technologies.</p>
+            </div>
+            <div class="exp-card">
+                <h3>Software Engineer Apprentice</h3>
+                <p>ALX Africa, Nairobi (Remote) | Nov 2022 - Jan 2024</p>
+                <p>Designed containerized web apps with Docker and GitHub Actions, maintained backend services, and collaborated via Jira.</p>
+            </div>
+            <div class="exp-card">
+                <h3>IT Support Intern</h3>
+                <p>Machakos County Government | Jan 2021 - Apr 2021</p>
+                <p>Provided system troubleshooting, LAN maintenance, and hardware diagnostics for operational continuity.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="skills" id="skills">
+        <h2>Skills</h2>
+        <div class="skills-grid">
+            <div class="skill-item">Python</div>
+            <div class="skill-item">JavaScript</div>
+            <div class="skill-item">TypeScript</div>
+            <div class="skill-item">Java</div>
+            <div class="skill-item">Spring Boot</div>
+            <div class="skill-item">Node.js</div>
+            <div class="skill-item">Express.js</div>
+            <div class="skill-item">React.js</div>
+            <div class="skill-item">AWS</div>
+            <div class="skill-item">Docker</div>
+            <div class="skill-item">Kubernetes</div>
+            <div class="skill-item">Jenkins</div>
+            <div class="skill-item">Terraform</div>
+            <div class="skill-item">Ansible</div>
+            <div class="skill-item">Git</div>
+            <div class="skill-item">Prometheus</div>
+            <div class="skill-item">Grafana</div>
+        </div>
+    </section>
+
+    <section class="education" id="education">
+        <h2>Education</h2>
+        <div class="edu-card">
+            <h3>Software Engineering Program</h3>
+            <p>ALX Africa | 2024</p>
+        </div>
+        <div class="edu-card">
+            <h3>B.Sc. Information Technology</h3>
+            <p>Machakos University | 2022</p>
+        </div>
+    </section>
+
+    <section class="certifications" id="certifications">
+        <h2>Certifications</h2>
+        <div class="cert-card">
+            <p>AWS Fundamentals (Coursera), Site Reliability Engineering (Udemy), Professional React Development (Andela), Full Stack Software Engineering (ALX Africa), Python Programming (HackerRank)</p>
+        </div>
+    </section>
+
+    <section class="contact" id="contact">
+        <h2>Let's Connect</h2>
+        <div class="contact-links">
+            <a href="mailto:kimanzikims300@gmail.com">Email</a>
+            <a href="tel:+254748404119">Phone</a>
+            <a href="https://www.linkedin.com/in/sebastian-k-j" target="_blank">LinkedIn</a>
+            <a href="https://medium.com/@_Sebastian" target="_blank">Medium</a>
+            <a href="https://www.github.com/seb-art" target="_blank">GitHub</a>
+            <a class="download-btn" onclick="generatePDF()">Download CV</a>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2025 Sebastian K. John. Built with Innovation.</p>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            document.body.classList.toggle('light-mode');
+            const sunIcon = document.querySelector('.sun-icon');
+            const moonIcon = document.querySelector('.moon-icon');
+            if (document.body.classList.contains('light-mode')) {
+                sunIcon.style.display = 'block';
+                moonIcon.style.display = 'none';
+            } else {
+                sunIcon.style.display = 'none';
+                moonIcon.style.display = 'block';
+            }
+            gsap.to('body', {
+                backgroundColor: document.body.classList.contains('light-mode') ? '#f5f5f5' : '#0d0d0d',
+                duration: 0.5
+            });
+            gsap.to('.theme-toggle', {
+                rotation: 180,
+                duration: 0.5,
+                ease: 'power3.out'
+            });
+        }
+
+        // Initialize theme
+        if (document.body.classList.contains('light-mode')) {
+            document.querySelector('.sun-icon').style.display = 'block';
+            document.querySelector('.moon-icon').style.display = 'none';
+        } else {
+            document.querySelector('.sun-icon').style.display = 'none';
+            document.querySelector('.moon-icon').style.display = 'block';
+        }
+
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Hero animations
+        gsap.from(".hero h1", {
+            y: 200,
+            opacity: 0,
+            scale: 0.6,
+            rotation: 10,
+            duration: 1.8,
+            ease: "power4.out",
+            delay: 0.3
+        });
+        gsap.from(".hero p", {
+            y: 100,
+            opacity: 0,
+            duration: 1.5,
+            ease: "power4.out",
+            delay: 0.6
+        });
+        gsap.from(".hero .btn", {
+            scale: 0,
+            opacity: 0,
+            rotation: 360,
+            duration: 1.2,
+            ease: "elastic.out(1, 0.3)",
+            delay: 0.9
+        });
+
+        // Theme toggle button animation
+        gsap.from(".theme-toggle", {
+            y: -100,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out"
+        });
+
+        // About section with 3D flip and parallax
+        gsap.from(".about .card", {
+            scrollTrigger: {
+                trigger: ".about",
+                start: "top 80%",
+            },
+            y: 400,
+            opacity: 0,
+            rotationX: 60,
+            scale: 0.8,
+            duration: 1.8,
+            ease: "power4.out"
+        });
+
+        // Experience cards with dynamic 3D entry
+        gsap.utils.toArray(".exp-card").forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 85%",
+                },
+                x: i % 2 === 0 ? -400 : 400,
+                opacity: 0,
+                rotationY: 90,
+                scale: 0.7,
+                duration: 1.5,
+                ease: "power4.out",
+                delay: i * 0.3
+            });
+        });
+
+        // Skills with spiral pop-in
+        gsap.utils.toArray(".skill-item").forEach((item, i) => {
+            gsap.from(item, {
+                scrollTrigger: {
+                    trigger: ".skills",
+                    start: "top 80%",
+                },
+                y: 200,
+                opacity: 0,
+                scale: 0.2,
+                rotation: i * 30,
+                duration: 1,
+                ease: "back.out(2.5)",
+                delay: i * 0.08
+            });
+        });
+
+        // Education and certifications with flip effect
+        gsap.utils.toArray(".edu-card, .cert-card").forEach((card, i) => {
+            gsap.from(card, {
+                scrollTrigger: {
+                    trigger: card,
+                    start: "top 85%",
+                },
+                x: i % 2 === 0 ? -300 : 300,
+                opacity: 0,
+                rotationX: 45,
+                duration: 1.5,
+                ease: "power4.out",
+                delay: i * 0.2
+            });
+        });
+
+        // Contact links with dynamic wave
+        gsap.utils.toArray(".contact-links a, .download-btn").forEach((link, i) => {
+            gsap.from(link, {
+                scrollTrigger: {
+                    trigger: ".contact",
+                    start: "top 80%",
+                },
+                y: 100,
+                opacity: 0,
+                rotation: i * 15,
+                duration: 1,
+                ease: "power3.out",
+                delay: i * 0.12
+            });
+        });
+
+        // PDF Generation
+        function generatePDF() {
+            const { jsPDF } = window.jspdf;
+            const doc = new jsPDF();
+
+            // Set default font and color
+            doc.setFont("helvetica", "normal");
+            doc.setTextColor(0, 0, 0); // Black text
+            doc.setFontSize(16);
+
+            // Title
+            doc.setFont("helvetica", "bold");
+            doc.text("Sebastian K. John", 20, 20);
+            doc.setFontSize(10);
+            doc.setFont("helvetica", "normal");
+            doc.text("Phone: +254748404119 | Email: kimanzikims300@gmail.com", 20, 30);
+            doc.text("LinkedIn: linkedin.com/in/sebastian-k-j | GitHub: github.com/seb-art | Medium: medium.com/@_Sebastian", 20, 36);
+
+            // Professional Summary
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text("Professional Summary", 20, 46);
+            doc.setFontSize(9);
+            doc.setFont("helvetica", "normal");
+            doc.text("Versatile Software Engineer with a strong foundation in distributed systems, cloud infrastructure, DevOps, and performance monitoring. Proven ability to design scalable APIs, maintain reliable production systems, and build tools for infrastructure automation. Passionate about system health, service uptime, and engineering efficiency. Experienced with AWS, Kubernetes, Terraform, CI/CD, and modern back-end stacks.", 20, 52, { maxWidth: 170 });
+
+            // Professional Experience
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text("Professional Experience", 20, 82);
+            doc.setFontSize(10);
+            doc.setFont("helvetica", "bold");
+            doc.text("Backend Engineer, Nathan Digital, Nairobi (Hybrid)", 20, 90);
+            doc.setFontSize(9);
+            doc.setFont("helvetica", "normal");
+            doc.text("May 2024 - Present", 20, 96);
+            doc.text("• Built and maintained backend APIs using Express.js and Spring Boot\n• Implemented scalable infrastructure with Docker and AWS\n• Enhanced observability using monitoring and logging tools\n• Collaborated with cross-functional teams for performance and security\n• Designed data protection protocols aligned with industry standards", 20, 102, { maxWidth: 170 });
+
+            doc.setFontSize(10);
+            doc.setFont("helvetica", "bold");
+            doc.text("Software Engineer & Technical Instructor, Qubit Institute, Hybrid", 20, 132);
+            doc.setFontSize(9);
+            doc.setFont("helvetica", "normal");
+            doc.text("Jun 2022 - Mar 2024", 20, 138);
+            doc.text("• Developed full-stack applications using Spring Boot, React.js, and PostgreSQL\n• Implemented CI/CD pipelines with GitHub Actions and Jenkins\n• Mentored students in Python, Java, and cloud fundamentals\n• Taught secure coding practices and agile methodologies\n• Optimized backend services for low-latency performance", 20, 144, { maxWidth: 170 });
+
+            doc.addPage();
+            doc.setFontSize(10);
+            doc.setFont("helvetica", "bold");
+            doc.text("Software Engineer Apprentice, ALX Africa, Nairobi (Remote)", 20, 20);
+            doc.setFontSize(9);
+            doc.setFont("helvetica", "normal");
+            doc.text("Nov 2022 - Jan 2024", 20, 26);
+            doc.text("• Designed and deployed containerized web apps using Docker\n• Maintained production-grade backend services\n• Used Jira for sprint management and collaboration\n• Applied version control best practices", 20, 32, { maxWidth: 170 });
+
+            doc.setFontSize(10);
+            doc.setFont("helvetica", "bold");
+            doc.text("IT Support Intern, Machakos County Government", 20, 58);
+            doc.setFontSize(9);
+            doc.setFont("helvetica", "normal");
+            doc.text("Jan 2021 - Apr 2021", 20, 64);
+            doc.text("• Performed system troubleshooting and LAN maintenance\n• Conducted software upgrades and backups\n• Supported hardware diagnostics and resolved user issues", 20, 70, { maxWidth: 170 });
+
+            // Technical Skills
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text("Technical Skills", 20, 90);
+            doc.setFontSize(9);
+            doc.setFont("helvetica", "normal");
+            doc.text("Languages & Frameworks: Python, JavaScript, TypeScript, Java, Spring Boot, Node.js, Express.js, React.js\nDevOps & Infrastructure: AWS (EC2, S3, RDS), Docker, Kubernetes, Jenkins, Terraform, Ansible, Git\nTools & Monitoring: GitHub Actions, Prometheus, Grafana, Jira, Shell scripting, Linux\nKey Areas: Site Reliability, CI/CD, Infrastructure as Code, Microservices, API Performance, System Monitoring", 20, 96, { maxWidth: 170 });
+
+            // Education
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text("Education", 20, 130);
+            doc.setFontSize(9);
+            doc.setFont("helvetica", "normal");
+            doc.text("Software Engineering Program, ALX Africa, 2024\nBachelor of Science in Information Technology, Machakos University, 2022", 20, 136, { maxWidth: 170 });
+
+            // Certifications
+            doc.setFontSize(12);
+            doc.setFont("helvetica", "bold");
+            doc.text("Certifications", 20, 152);
+            doc.setFontSize(9);
+            doc.setFont("helvetica", "normal");
+            doc.text("• AWS Fundamentals - Coursera\n• Site Reliability Engineering Foundations - Udemy\n• Professional React Development - Andela Learning Program\n• Full Stack Software Engineering - ALX Africa\n• Python Programming - HackerRank", 20, 158, { maxWidth: 170 });
+
+            // Save PDF
+            doc.save("Sebastian_K_John_CV.pdf");
+        }
+    </script>
+</body>
+</html>
